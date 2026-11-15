@@ -1,0 +1,27 @@
+{
+  "schema": "nivel2-field-v1",
+  "L": 32,
+  "T": 1.5,
+  "J": 1.0,
+  "H_values": [
+    -0.75,
+    -1.0,
+    -1.5,
+    -2.0,
+    -3.0
+  ],
+  "runs_per_pair": 100,
+  "seed_base": 20261115,
+  "dynamics": [
+    "glauber",
+    "metropolis"
+  ],
+  "max_attempts": 0,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "executables": {
+    "standard": "/mnt/data/ising_work/build/simulator/ising_standard",
+    "nfold": "/mnt/data/ising_work/build/simulator/ising_nfold"
+  },
+  "status": "started",
+  "csv": []
+}

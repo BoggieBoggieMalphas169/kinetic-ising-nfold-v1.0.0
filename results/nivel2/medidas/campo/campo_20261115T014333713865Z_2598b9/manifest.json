@@ -1,0 +1,168 @@
+{
+  "schema": "nivel2-field-v1",
+  "L": 32,
+  "T": 1.5,
+  "J": 1.0,
+  "H_values": [
+    -0.75,
+    -1.0,
+    -1.5,
+    -2.0,
+    -3.0
+  ],
+  "runs_per_pair": 100,
+  "seed_base": 20261115,
+  "dynamics": [
+    "glauber",
+    "metropolis"
+  ],
+  "max_attempts": 0,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "executables": {
+    "standard": "/mnt/data/ising_work/build/simulator/ising_standard",
+    "nfold": "/mnt/data/ising_work/build/simulator/ising_nfold"
+  },
+  "status": "completed",
+  "csv": [
+    {
+      "file": "raw/standard_glauber_H00.csv",
+      "sha256": "7ba5fdb41bdef2c993b830c50fa469cf92bd9b71cbb3cc0e124d12f31b17e638",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_glauber_H00.csv",
+      "sha256": "4ab70b43ae1ad9f18f604a3e9cbe3ad8d06e659f1ca4e9d215ce08c73cf7138f",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_glauber_H01.csv",
+      "sha256": "f0949e7c637ac0126b2bf08d7e01b19c4078ad1656ca5dbeeb0979f6010b4d93",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_glauber_H01.csv",
+      "sha256": "719b553391d2e427609b79c5262cba5016b9a7da9eea037775c4ee1f4f7650f6",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_glauber_H02.csv",
+      "sha256": "7df726ade57f94ab031ab59dcee9113be6a4cc6abb1807c716555bb050155481",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_glauber_H02.csv",
+      "sha256": "6d3e87f3a9394a168663a98e71587d089b3e822d17a1523bddc856cb9354a8f8",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_glauber_H03.csv",
+      "sha256": "6c5e19491891cb5f149a136b8165cba711ff32523da5b31a96e4666101c79408",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_glauber_H03.csv",
+      "sha256": "cf8226109bcf26b3d6b1d791ad85f90aef2b570cf6a6bed7c82d3069a1ea1cfe",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_glauber_H04.csv",
+      "sha256": "e3c7dbc46950c8dae4ed83ad020aa48b5d91a1b7a189fe8a2b18846da5d8c3e5",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_glauber_H04.csv",
+      "sha256": "3b67b69d48ae1a6c2d7c9772b86e936f2ce4b3ae19cad22d35f1a5d856f98095",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_metropolis_H00.csv",
+      "sha256": "c6ea612bc58c73d159ba1797beee7a3b50b123181af324533ded3ce1da0d4061",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_metropolis_H00.csv",
+      "sha256": "85529a1f36bbdb54d79f1b25eda3e834c0b6424137cef6bfdf7e57400f187397",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_metropolis_H01.csv",
+      "sha256": "6864cfdac8626dc47f02a01dc4f55dd09452f9899efd7a4e137dea518f022af9",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_metropolis_H01.csv",
+      "sha256": "8d52a926b8f33de4b8d81f9049fc8bc5f21f67cbcb3b16b15ff736275a4e7238",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_metropolis_H02.csv",
+      "sha256": "7db9fccd23aecd4e09940d89675a8c633d47b827aadff05b7fec055c4fdc0e15",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_metropolis_H02.csv",
+      "sha256": "d9d53e1ccaa5d986c9b25e25c55b7f73d7d4c1abd8e1c873c8496a0a59d42321",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_metropolis_H03.csv",
+      "sha256": "1cbd2520f4c399bb1887c13abcff473e4b73345f9ed601316fc993e32647eecd",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_metropolis_H03.csv",
+      "sha256": "7123e3c53dfdd43274c5b674b345dd80799233c37ffa37ebcd18052c08e06ede",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/standard_metropolis_H04.csv",
+      "sha256": "1aca6cd8579f14af3f1a867fd9a7cf1ec20449e1e1d82e968312b96b39c61218",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    },
+    {
+      "file": "raw/nfold_metropolis_H04.csv",
+      "sha256": "e26c7d8506a2874166170b2b293847be83c9735c7f35cc12e39d67da84858d1c",
+      "rows": 100,
+      "complete": 100,
+      "censored": 0
+    }
+  ]
+}

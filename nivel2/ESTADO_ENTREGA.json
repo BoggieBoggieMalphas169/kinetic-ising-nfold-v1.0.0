@@ -1,0 +1,58 @@
+{
+  "extensión": "Nivel 2 — automatización v1.0.0+N2",
+  "fecha": "2026-11-15",
+  "base": "kinetic-ising-nfold-v1.0.0 original + memoria 14/11/2026",
+  "familias_figuras": 9,
+  "figuras_generadas": 27,
+  "formatos": [
+    "PNG",
+    "PDF"
+  ],
+  "escaneo_campo": {
+    "L": 32,
+    "T": 1.5,
+    "J": 1,
+    "H": [
+      -0.75,
+      -1,
+      -1.5,
+      -2,
+      -3
+    ],
+    "algoritmos": [
+      "standard",
+      "nfold"
+    ],
+    "dinamicas": [
+      "glauber",
+      "metropolis"
+    ],
+    "vidas_por_punto": 100,
+    "estado": "piloto/exploratorio"
+  },
+  "trazador": {
+    "L": 32,
+    "T": 1.5,
+    "H": -0.75,
+    "regla": "glauber",
+    "seed": 20261115,
+    "status": "verificado con motor original y recomputación de M/E"
+  },
+  "pruebas": {
+    "CTest": "6/6",
+    "pytest_originales": "86/86",
+    "equivalencia_exacta_trace": [
+      "Standard",
+      "n-fold"
+    ],
+    "archivos_originales_intactos": 375
+  },
+  "modificacion_archivo_original": [
+    "simulator/CMakeLists.txt"
+  ],
+  "advertencias": [
+    "PS1 no probados en un equipo Windows en esta sesión",
+    "No se alteran los CSV ni snapshots históricos",
+    "Resultados 100 vidas/punto no cierran incertidumbres frías históricas"
+  ]
+}
