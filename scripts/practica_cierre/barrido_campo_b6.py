@@ -179,10 +179,14 @@ def analyze_records(raw_dir:Path,spec:dict,records:list[dict]):
         algo,dyn,h=record['algorithm'],record['dynamics'],float(record['H'])
         if (dyn,h,algo) in by_key:
             raise ValueError('Grupo repetido en manifiesto')
-        rel=Path(record['path'])
-        if rel.is_absolute() or '..' in rel.parts or not str(rel).startswith('datos_nuevos/'):
+        # Los manifiestos guardan rutas POSIX, pero Path en Windows usa barras invertidas.
+        # Validar por componentes evita falsos negativos y mantiene la seguridad.
+        rel=Path(str(record['path']).replace('\\', '/'))
+        if rel.is_absolute() or '..' in rel.parts or not rel.parts or rel.parts[0] != 'datos_nuevos':
             raise ValueError('Ruta de datos no permitida')
-        f=raw_dir/rel
+        f=(raw_dir/rel).resolve()
+        if not f.is_relative_to(raw_dir.resolve()):
+            raise ValueError('Ruta de datos no permitida')
         if not f.is_file() or sha256(f)!=record['sha256']:
             raise ValueError(f'Archivo ausente/alterado {rel}')
         seed=stable_seed(spec['seed'],dyn,algo,h)

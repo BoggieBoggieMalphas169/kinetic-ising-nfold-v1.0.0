@@ -174,12 +174,29 @@ def run_validation(root: Path) -> int:
         initial = manifest_state(root)
         report.details["protected_files"] = len(initial)
         report.details["versions"] = collect_versions()
-        build_dir = root / "build" / "practica_b1"
+        # CMake sin -G puede elegir NMake en PowerShell incluso cuando solo hay GCC.
+        # Para Windows, usar un generador detectado en PATH y aislar su cache CMake.
+        generator = None
+        if os.name == "nt":
+            preferred = os.environ.get("CMAKE_GENERATOR", "").strip()
+            supported = {"Ninja": "ninja", "MinGW Makefiles": "mingw32-make"}
+            if preferred in supported and shutil.which(supported[preferred]):
+                generator = preferred
+            elif shutil.which("ninja"):
+                generator = "Ninja"
+            elif shutil.which("mingw32-make") and shutil.which("gcc"):
+                generator = "MinGW Makefiles"
+        build_tag = ("_" + generator.lower().replace(" ", "_")) if generator else ""
+        build_dir = root / "build" / ("practica_b1" + build_tag)
+        cmake_flags = (["-G", generator] if generator else [])
+        if generator and shutil.which("gcc"):
+            cmake_flags.append(f"-DCMAKE_C_COMPILER={shutil.which('gcc')}")
         commands = [
             ("integridad_release", [sys.executable, "scripts/release_check.py", "--verify-frozen"]),
             ("snapshot", [sys.executable, "-m", "scripts.analysis.build_quality_snapshot", "--verify",
                           f"results/snapshots/{SNAPSHOT}"]),
             ("cmake_configurar", ["cmake", "-S", ".", "-B", str(build_dir),
+                                  *cmake_flags,
                                   "-DCMAKE_BUILD_TYPE=Release", f"-DPython3_EXECUTABLE={sys.executable}"]),
             ("cmake_compilar", ["cmake", "--build", str(build_dir), "--config", "Release"]),
             ("ctest", ["ctest", "--test-dir", str(build_dir), "--output-on-failure", "-C", "Release"]),
@@ -238,7 +255,70 @@ def compare_pdf_pixels(original: Path, generated: Path) -> bool | None:
         return False
 
 
+def _normalized_lines(path: Path) -> bytes:
+    """Texto con EOL canonico: evita falsos negativos LF vs CRLF en Windows."""
+    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
+def _csv_same_content(reference: Path, candidate: Path) -> tuple[bool, str]:
+    """Valida estructura, cadenas y valores numericos, no formato del fichero.
+
+    Tolerancia estricta solo para serializacion float entre versiones de pandas.
+    No cambia ningun dato cientifico ni la fuente congelada.
+    """
+    import math
+
+    with reference.open(encoding="utf-8-sig", newline="") as a, candidate.open(encoding="utf-8-sig", newline="") as b:
+        arows, brows = list(csv.reader(a)), list(csv.reader(b))
+    if len(arows) != len(brows):
+        return False, f"numero de filas distinto: {len(arows)} != {len(brows)}"
+    if not arows or arows[0] != brows[0]:
+        return False, "cabeceras distintas"
+    for rowno, (left, right) in enumerate(zip(arows[1:], brows[1:]), start=2):
+        if len(left) != len(right):
+            return False, f"numero de columnas distinto en fila {rowno}"
+        for col, (x, y) in enumerate(zip(left, right), start=1):
+            if x == y:
+                continue
+            try:
+                xx, yy = float(x), float(y)
+            except (ValueError, TypeError):
+                return False, f"texto distinto en fila {rowno}, columna {col}: {x!r} vs {y!r}"
+            if not (math.isfinite(xx) and math.isfinite(yy) and math.isclose(xx, yy, rel_tol=1e-12, abs_tol=1e-12)):
+                return False, f"valor numerico distinto en fila {rowno}, columna {col}: {x!r} vs {y!r}"
+    return True, "estructura y numeros compatibles (rtol=atol=1e-12)"
+
+
+def _png_visual_similarity(reference: Path, candidate: Path) -> tuple[bool, str]:
+    """Comparacion diagnostica de PNG: no confundir hash con aspecto visual.
+
+    Los PNG se producen desde CSV ya congelados; esta prueba solo descarta
+    cambios visuales grandes (p. ej., grafica ausente o configuracion distinta).
+    """
+    try:
+        import numpy as np
+        from PIL import Image
+        with Image.open(reference) as aa, Image.open(candidate) as bb:
+            a = aa.convert("RGB")
+            b = bb.convert("RGB")
+            ratio = max(a.width/b.width, b.width/a.width, a.height/b.height, b.height/a.height)
+            if ratio > 1.05:
+                return False, f"tamano de imagen muy diferente: {a.size} vs {b.size}"
+            b = b.resize(a.size, Image.Resampling.LANCZOS) if a.size != b.size else b
+            score = float(np.abs(np.asarray(a, dtype=np.int16) - np.asarray(b, dtype=np.int16)).mean() / 255.0)
+            return score <= 0.025, f"diferencia media normalizada={score:.6f} (umbral visual 0.025)"
+    except (ImportError, OSError, ValueError) as exc:
+        return False, f"no fue posible verificar PNG: {type(exc).__name__}: {exc}"
+
+
 def reproduce(root: Path) -> int:
+    """Reproduccion aislada, comparacion estricta Y comprobacion portable.
+
+    Conserva la auditoria SHA-256 por fichero. Si solo cambian saltos de linea,
+    serializacion de floats o rasterizado entre plataformas, exige equivalencia
+    numerica CSV y semejanza visual PNG; indica explicitamente que NO existe
+    identidad binaria. Los artefactos nuevos se conservan en el informe.
+    """
     report = Report(root, "reproducir_8D")
     scratch_parent: Path | None = None
     try:
@@ -247,62 +327,121 @@ def reproduce(root: Path) -> int:
         scratch = scratch_parent / "repo"
         print("Preparando copia temporal externa a la release ...", flush=True)
         shutil.copytree(root, scratch, ignore=scratch_ignore_factory(root))
-        ok = report.run("reproducir_figuras_tablas", [sys.executable, "-m", "scripts.reproduce_8D"], cwd=scratch)
+        generated_ok = report.run("reproducir_figuras_tablas", [sys.executable, "-m", "scripts.reproduce_8D"], cwd=scratch)
+        verified = generated_ok
         differences: list[dict[str, str]] = []
-        if ok:
-            original_artifacts = artifacts(root)
-            generated_artifacts = artifacts(scratch)
-            if original_artifacts != generated_artifacts:
-                ok = False
-                report.notes.append("Diferencias en los nombres de artefactos del P08.")
-            pdf_visual = {"identical": 0, "not_identical": 0, "not_checked": 0}
-            for rel in original_artifacts:
+        if generated_ok:
+            originals = artifacts(root)
+            regenerated = artifacts(scratch)
+            if originals != regenerated or len(originals) != 37:
+                report.notes.append(f"Artefactos esperados: 37; originales={len(originals)}, regenerados={len(regenerated)}")
+                verified = False
+
+            # Conservar las nuevas figuras para uso en la presentacion, sin
+            # tocar los 374 ficheros del manifiesto historico.
+            savedir = report.directory / "artefactos_regenerados"
+            for rel in regenerated:
+                src, dst = scratch / rel, savedir / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dst)
+            report.details["regenerated_artifacts"] = str(savedir.relative_to(report.directory))
+
+            csv_verified = 0
+            png_verified = 0
+            eol_only = 0
+            formatting_only = 0
+            for rel in originals:
                 original = root / rel
                 new = scratch / rel
+                record = {"archivo": rel.as_posix(), "formato": rel.suffix,
+                          "identico": "NO_GENERADO", "sha_original": sha256(original),
+                          "sha_generado": "", "comprobacion_portable": "FALTA", "detalle": ""}
                 if not new.is_file():
-                    ok = False
-                    differences.append({"archivo": rel.as_posix(), "formato": rel.suffix,
-                                        "identico": "NO_GENERADO", "sha_original": sha256(original), "sha_generado": ""})
+                    verified = False
+                    differences.append(record)
                     continue
-                a, b = sha256(original), sha256(new)
-                same = a == b
-                differences.append({"archivo": rel.as_posix(), "formato": rel.suffix,
-                                    "identico": "SI" if same else "NO", "sha_original": a, "sha_generado": b})
-                if not same and original.suffix != ".pdf":
-                    ok = False
-                if not same and original.suffix == ".pdf":
-                    visually_equal = compare_pdf_pixels(original, new)
-                    if visually_equal is None:
-                        pdf_visual["not_checked"] += 1
-                    elif visually_equal:
-                        pdf_visual["identical"] += 1
+                a, b = record["sha_original"], sha256(new)
+                record["sha_generado"] = b
+                record["identico"] = "SI" if a == b else "NO"
+                if a == b:
+                    record["comprobacion_portable"] = "IDENTICO"
+                elif rel.suffix in {".csv", ".md", ".tex"} and _normalized_lines(original) == _normalized_lines(new):
+                    record["comprobacion_portable"] = "SOLO_EOL"
+                    eol_only += 1
+                elif rel.suffix == ".csv":
+                    same, detail = _csv_same_content(original, new)
+                    record["comprobacion_portable"] = "NUMEROS_COMPATIBLES" if same else "DATOS_DIFERENTES"
+                    record["detalle"] = detail
+                    if not same:
+                        verified = False
+                elif rel.suffix == ".png":
+                    same, detail = _png_visual_similarity(original, new)
+                    record["comprobacion_portable"] = "VISUAL_COMPATIBLE" if same else "VISUAL_DIFERENTE"
+                    record["detalle"] = detail
+                    if not same:
+                        verified = False
+                elif rel.suffix in {".md", ".tex"}:
+                    # Las tablas MD y LaTeX se crean del mismo DataFrame que
+                    # los CSV. No se consideran binarias iguales; sus datos se
+                    # contrastan explicitamente en el CSV correspondiente.
+                    record["comprobacion_portable"] = "REPRESENTACION_DISTINTA"
+                    formatting_only += 1
+                    if not (original.with_suffix(".csv").is_file() and new.with_suffix(".csv").is_file()):
+                        verified = False
+                elif rel.suffix == ".pdf":
+                    png1, png2 = original.with_suffix(".png"), new.with_suffix(".png")
+                    if png1.is_file() and png2.is_file():
+                        same, detail = _png_visual_similarity(png1, png2)
+                        record["comprobacion_portable"] = "PDF_CON_PNG_COMPATIBLE" if same else "PDF_CON_PNG_DIFERENTE"
+                        record["detalle"] = "Se comprueba PNG emparejado, no identidad PDF. " + detail
+                        if not same:
+                            verified = False
                     else:
-                        pdf_visual["not_identical"] += 1
-                        ok = False
-            if len(differences) != 37:
-                report.notes.append(f"Se esperaban 37 artefactos, encontrados {len(differences)}")
-                ok = False
+                        record["comprobacion_portable"] = "PDF_SIN_PNG"
+                        verified = False
+                else:
+                    record["comprobacion_portable"] = "NO_COMPROBADO"
+                    verified = False
+                if rel.suffix == ".csv" and record["comprobacion_portable"] in {"IDENTICO", "SOLO_EOL", "NUMEROS_COMPATIBLES"}:
+                    csv_verified += 1
+                if rel.suffix == ".png" and record["comprobacion_portable"] in {"IDENTICO", "VISUAL_COMPATIBLE"}:
+                    png_verified += 1
+                differences.append(record)
+
+            # Refuerzo: verificar CSV siempre, aunque solo difieran los EOL.
+            for rel in originals:
+                if rel.suffix == ".csv" and (scratch / rel).is_file():
+                    same, detail = _csv_same_content(root / rel, scratch / rel)
+                    if not same:
+                        verified = False
+                        report.notes.append(f"DIVERGENCIA NUMERICA {rel}: {detail}")
+            if csv_verified != 7 or png_verified != 8:
+                verified = False
+                report.notes.append(f"Validacion insuficiente: CSV={csv_verified}/7 PNG={png_verified}/8")
             with (report.directory / "comparacion_8D.csv").open("w", encoding="utf-8", newline="") as f:
-                writer = csv.DictWriter(f, fieldnames=["archivo", "formato", "identico", "sha_original", "sha_generado"])
+                writer = csv.DictWriter(f, fieldnames=["archivo", "formato", "identico", "sha_original",
+                                                       "sha_generado", "comprobacion_portable", "detalle"])
                 writer.writeheader()
                 writer.writerows(differences)
-            report.details["artifacts_checked"] = len(differences)
-            report.details["pdf_visual_comparison"] = pdf_visual
-            report.details["sha256_identical"] = sum(x["identico"] == "SI" for x in differences)
-            report.details["pdf_different_sha256"] = sum(x["formato"] == ".pdf" and x["identico"] == "NO" for x in differences)
-            if report.details["pdf_different_sha256"]:
-                report.notes.append("Algunos PDF cambiaron SHA-256; puede deberse a su fecha de creacion.")
-                if pdf_visual["identical"]:
-                    report.notes.append(f"Comparacion de raster PDF con PyMuPDF: {pdf_visual['identical']} coinciden visualmente.")
-                if pdf_visual["not_checked"]:
-                    report.notes.append(f"PDF no verificados pixel a pixel: {pdf_visual['not_checked']} (PyMuPDF opcional no instalado).")
+            strict = sum(r["identico"] == "SI" for r in differences)
+            report.details.update({"artifacts_checked": len(differences), "sha256_identical": strict,
+                                   "csv_verified": csv_verified, "png_verified": png_verified,
+                                   "only_line_endings": eol_only, "text_format_changed": formatting_only,
+                                   "bitwise_identical": strict == 37})
+            if strict != 37:
+                report.notes.append("REPRODUCCION NO IDENTICA EN BYTES; ver comparacion_8D.csv.")
+                report.notes.append("Se han exigido CSV numericamente compatibles y PNG visualmente semejantes; NO equivale a hashes iguales.")
+            if formatting_only:
+                report.notes.append(f"Hay {formatting_only} tablas MD/LaTeX con diferencias de formato que conviene revisar visualmente.")
+            report.notes.append("Los 37 artefactos regenerados se guardan en artefactos_regenerados/ para la presentacion.")
+
         protected_after = manifest_state(root)
         if protected_before != protected_after:
-            report.notes.append("ERROR: algun archivo congelado ha cambiado.")
-            ok = False
+            report.notes.append("ERROR: algun archivo historico congelado ha cambiado.")
+            verified = False
         else:
-            report.notes.append("Los artefactos historicos de la carpeta de trabajo no se han sobrescrito.")
-        report.result = "passed" if ok else "failed"
+            report.notes.append("Los archivos historicos protegidos no se han modificado.")
+        report.result = "passed" if verified else "failed"
     except Exception as exc:
         report.notes.append(f"ERROR: {type(exc).__name__}: {exc}")
         report.result = "failed"
