@@ -48,10 +48,6 @@ target_link_libraries(ising_standard PRIVATE ising_core)
 add_executable(ising_nfold src/main_nfold.c)
 target_link_libraries(ising_nfold PRIVATE ising_core)
 
-# Optional observability runner for Level-2 plots. Does not alter production binaries.
-add_executable(ising_trace src/main_trace.c)
-target_link_libraries(ising_trace PRIVATE ising_core)
-
 enable_testing()
 
 add_executable(test_physics tests/test_physics.c)

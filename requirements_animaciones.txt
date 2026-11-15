@@ -1,0 +1,5 @@
+# Solo para el bloque 5. No modificar requirements.txt (release v1.0.0 congelada).
+-r requirements.txt
+Pillow>=10.0
+imageio>=2.34
+imageio-ffmpeg>=0.5
