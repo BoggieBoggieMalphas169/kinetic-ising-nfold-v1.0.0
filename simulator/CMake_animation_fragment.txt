@@ -1,0 +1,2 @@
+add_executable(ising_animation_trace src/main_animation_trace.c)
+target_link_libraries(ising_animation_trace PRIVATE ising_core)
