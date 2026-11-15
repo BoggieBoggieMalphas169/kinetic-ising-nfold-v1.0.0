@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Build/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Transient simulation output: keep directory placeholders, not arbitrary local runs
+results/raw/standard/*.csv
+results/raw/nfold/*.csv
+
+# Temporary analysis exports
+*.tmp
+*.bak
+
+# Local release bundles
+dist/
+# C/CMake local build products
+build/
+build-*/
+simulator/build/
+simulator/build-*/
+*.exe
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.dylib
+
+# Ad-hoc root outputs from example runs
+standard.csv
+nfold.csv

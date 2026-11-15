@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Performance regimes across temperature.}
+\label{tab:temperature_performance}
+\begin{tabular}{lrrrrrrrlrrrr}
+\toprule
+Dynamics & H/J & T/J min & T/J max & Speed-up min & Speed-up max & n-fold faster points & Standard faster points & Regime & Crossover T/J & Compression min & Compression max & Median event-cost ratio \\
+\midrule
+glauber & -3 & 0.8 & 2.1 & 0.4603 & 0.6127 & 0 & 7 & STANDARD\_FASTER\_ACROSS\_TESTED\_T & NaN & 2.238 & 3.425 & 5.033 \\
+glauber & -0.75 & 0.8 & 2.1 & 0.8813 & 175.8 & 6 & 1 & CROSSOVER\_WITHIN\_TESTED\_T & 2.006 & 5.491 & 1067 & 7.197 \\
+metropolis & -3 & 0.8 & 2.1 & 0.3641 & 0.5163 & 0 & 7 & STANDARD\_FASTER\_ACROSS\_TESTED\_T & NaN & 1.713 & 3.205 & 5.991 \\
+metropolis & -0.75 & 0.8 & 2.1 & 0.5715 & 166.5 & 5 & 2 & CROSSOVER\_WITHIN\_TESTED\_T & 1.655 & 4.378 & 1055 & 8.164 \\
+\bottomrule
+\end{tabular}
+\end{table}

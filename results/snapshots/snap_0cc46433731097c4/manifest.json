@@ -1,0 +1,72 @@
+{
+  "created_utc": "2026-09-29T14:54:45.597688+00:00",
+  "environment": {
+    "implementation": "CPython",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5"
+  },
+  "files": [
+    {
+      "path": "results/metadata/duplicate_experiments.csv",
+      "sha256": "7da68d567c7d54531d2e2d20e99c18ab3a1a7a34c2de198e088520cf9e68358e",
+      "size_bytes": 85
+    },
+    {
+      "path": "results/metadata/experiment_coverage_summary.csv",
+      "sha256": "e066f04df5ea2ceb2d389507ae606d75e5046e1dc033bedf4d49eb98e7c9a2ef",
+      "size_bytes": 213
+    },
+    {
+      "path": "results/metadata/experiment_design.json",
+      "sha256": "09f46728652ea9fa48b291168ff780d085f68c573e7688c280ced326ef8b0c2f",
+      "size_bytes": 831
+    },
+    {
+      "path": "results/metadata/missing_experiments.csv",
+      "sha256": "7da68d567c7d54531d2e2d20e99c18ab3a1a7a34c2de198e088520cf9e68358e",
+      "size_bytes": 85
+    },
+    {
+      "path": "results/metadata/prompt6_compatibility_report.csv",
+      "sha256": "f1ac5b2e6abdea2cf3af1a3bc1a17a860ba72cbe5b5ce3c21a6e340c5c513003",
+      "size_bytes": 365
+    },
+    {
+      "path": "results/metadata/prompt6_context.json",
+      "sha256": "cebc86575e5e9076c492a8ecc5bad61eb695b658765132d7725727e8cffa998c",
+      "size_bytes": 144
+    },
+    {
+      "path": "results/metadata/unexpected_experiments.csv",
+      "sha256": "7da68d567c7d54531d2e2d20e99c18ab3a1a7a34c2de198e088520cf9e68358e",
+      "size_bytes": 85
+    },
+    {
+      "path": "results/processed/master_comparisons.csv",
+      "sha256": "4ed3ead45b2158ea7f3c625f14be3edcab2668e97aecaeccc4a4195c4b6f1762",
+      "size_bytes": 35980
+    },
+    {
+      "path": "results/processed/master_experiment_catalog.csv",
+      "sha256": "dd8ddf760b377ebf697d7c3528e9c4c6fe9fc1cc5d6e253a255b2c7f8de3abaf",
+      "size_bytes": 7858
+    },
+    {
+      "path": "results/processed/prompt6_comparison_summary.csv",
+      "sha256": "4570edd760777b83d88513e80ac635c6db7ae82ae8bb2948f4eb711f9057085e",
+      "size_bytes": 25948
+    }
+  ],
+  "quality_gate_schema_version": "8A21.1",
+  "records": {
+    "master_comparisons": 52,
+    "unique_physical_points": 44
+  },
+  "scientific_status": {
+    "INCONCLUSIVE": 3,
+    "PASS": 49
+  },
+  "snapshot_id": "snap_0cc46433731097c4",
+  "snapshot_schema_version": "8A21-snapshot-v1",
+  "status": "READY_FOR_8B"
+}

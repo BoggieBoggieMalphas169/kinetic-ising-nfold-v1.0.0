@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "release_date": "2026-09-30",
+  "release_scope": "integrated-simulator-and-analysis",
+  "analysis_snapshot": "snap_0cc46433731097c4",
+  "simulator_core_included": true,
+  "simulator_origin": "user-provided ising_prompt6_FINAL_complete.zip",
+  "headline": {
+    "comparison_records": 52,
+    "unique_physical_points": 44,
+    "pass": 49,
+    "inconclusive": 3,
+    "fail": 0
+  },
+  "performance": {
+    "max_measured_speedup_approx": 175.8,
+    "max_event_compression_approx": 1066.7
+  },
+  "final_figures": 8,
+  "final_table_sets": 7,
+  "python_test_count_expected": 86,
+  "ctest_count_expected": 6
+}

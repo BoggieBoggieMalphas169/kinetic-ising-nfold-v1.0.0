@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Robustness of physical equivalence across lattice size.}
+\label{tab:size_robustness}
+\begin{tabular}{lrrrrrrrrrl}
+\toprule
+Dynamics & H/J & L min & L max & PASS & INCONCLUSIVE & FAIL & Max |R\_tau-1| (\%) & R\_tau drift (pp / L doubling) & Delta log(tau) slope & Status \\
+\midrule
+glauber & -3 & 8 & 128 & 5 & 0 & 0 & 1.237 & -0.2453 & -0.002438 & ROBUST\_ACROSS\_TESTED\_L \\
+glauber & -0.75 & 8 & 128 & 5 & 0 & 0 & 1.104 & 0.08863 & 0.0008922 & ROBUST\_ACROSS\_TESTED\_L \\
+metropolis & -3 & 8 & 128 & 5 & 0 & 0 & 0.1786 & -0.02325 & -0.0002321 & ROBUST\_ACROSS\_TESTED\_L \\
+metropolis & -0.75 & 8 & 128 & 5 & 0 & 0 & 1.065 & -0.1912 & -0.001902 & ROBUST\_ACROSS\_TESTED\_L \\
+\bottomrule
+\end{tabular}
+\end{table}

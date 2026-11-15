@@ -1,0 +1,17 @@
+gate_schema_version,check_id,severity,passed,observed,expected,message
+8A21.1,required_files_present,BLOCKER,True,all present,all required 8A.20 files,Canonical catalog/design files required before entering 8B.
+8A21.1,master_schema,BLOCKER,True,['8A20.1'],8A20.1,All comparison records must use the current 8A.20 master schema.
+8A21.1,record_level,BLOCKER,True,['comparison_summary'],comparison_summary,"8B consumes Standard-vs-n-fold comparison summaries, not raw runs."
+8A21.1,comparison_ids_unique,BLOCKER,True,52,52,Every observed comparison must have one unique deterministic comparison_id.
+8A21.1,physical_ids_complete,BLOCKER,True,52,52,Every comparison entering 8B must have complete physical context and experiment_id.
+8A21.1,all_records_analysis_ready,BLOCKER,True,52,52,No partial-context or ambiguous within-study duplicate may enter 8B.
+8A21.1,no_within_study_duplicate_flags,BLOCKER,True,0,0,Cross-study overlaps are allowed; within-study duplicate comparisons are not.
+8A21.1,contracts_complete,BLOCKER,True,0,0,Historical inputs must be normalized with complete physical context.
+8A21.1,catalog_ids_unique,BLOCKER,True,44,44,Master experiment catalog must contain one row per unique physical point.
+8A21.1,catalog_matches_master,BLOCKER,True,0,0,The catalog must contain exactly the physical points referenced by master_comparisons.
+8A21.1,declared_design_full_coverage,BLOCKER,True,1.0,1.0,Every point declared by experiment_design.json must be represented exactly once per study.
+8A21.1,no_missing_experiments,BLOCKER,True,0,0,Declared experiments may not be absent from the 8B input dataset.
+8A21.1,no_duplicate_experiments,BLOCKER,True,0,0,No declared point may appear ambiguously more than once inside one study.
+8A21.1,unexpected_experiments,BLOCKER,True,0,0 (unless --allow-unexpected),Unexpected points are retained by 8A.20 but require explicit opt-in before 8B.
+8A21.1,cross_study_overlaps_documented,INFO,True,12,allowed,Repeated physical points across campaigns are legitimate replication/overlap.
+8A21.1,scientific_equivalence_status,INFO,True,PASS:49;INCONCLUSIVE:3,informational only,PASS/INCONCLUSIVE/FAIL are scientific outcomes and do not determine data integrity.

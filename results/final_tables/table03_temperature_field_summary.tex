@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Robustness of physical equivalence across temperature and magnetic field.}
+\label{tab:temperature_field}
+\begin{tabular}{lrrrrrrlrrl}
+\toprule
+Dynamics & H/J & T/J min & T/J max & PASS & INCONCLUSIVE & FAIL & Inconclusive T/J & Lowest PASS T/J & Max |R\_tau-1| (\%) & Status \\
+\midrule
+glauber & -3 & 0.8 & 2.1 & 7 & 0 & 0 & NaN & 0.8 & 0.201 & ROBUST\_ACROSS\_TESTED\_T \\
+glauber & -0.75 & 0.8 & 2.1 & 5 & 2 & 0 & 0.8;0.9 & 1 & 13.66 & INCONCLUSIVE\_AT\_SOME\_T \\
+metropolis & -3 & 0.8 & 2.1 & 7 & 0 & 0 & NaN & 0.8 & 0.2554 & ROBUST\_ACROSS\_TESTED\_T \\
+metropolis & -0.75 & 0.8 & 2.1 & 6 & 1 & 0 & 0.8 & 0.9 & 16.11 & INCONCLUSIVE\_AT\_SOME\_T \\
+\bottomrule
+\end{tabular}
+\end{table}

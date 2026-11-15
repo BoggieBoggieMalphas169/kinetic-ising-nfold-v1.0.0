@@ -1,0 +1,14 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+repeated_campaign_records,12
+repeated_physical_points,4
+consistent_points,4
+mixed_or_inconclusive_points,0
+cross_campaign_discrepancy_points,0
+points_with_common_ratio_ci_intersection,4
+points_common_ratio_ci_contains_one,4
+pairwise_ratio_ci_comparisons,12
+pairwise_ratio_ci_nonoverlap_count,0
+max_ratio_span_percentage_points,1.7355267770154614
+max_standard_tau_campaign_span_pct,0.9333091044476637
+max_nfold_tau_campaign_span_pct,1.3346556196512505

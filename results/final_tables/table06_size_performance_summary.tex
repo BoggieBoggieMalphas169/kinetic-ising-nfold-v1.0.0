@@ -1,0 +1,14 @@
+\begin{table}
+\caption{Performance scaling with lattice size at T/J=1.5.}
+\label{tab:size_performance}
+\begin{tabular}{lrrrrrrrrrl}
+\toprule
+Dynamics & H/J & L min & L max & alpha Standard & alpha n-fold & beta speed-up & Geometric mean speed-up & Speed-up at L min & Speed-up at L max & Winner across tested L \\
+\midrule
+glauber & -3 & 8 & 128 & 1.955 & 1.995 & -0.03993 & 0.5383 & 0.581 & 0.5212 & STANDARD \\
+glauber & -0.75 & 8 & 128 & 1.928 & 1.961 & -0.03325 & 1.878 & 2.016 & 1.798 & NFOLD \\
+metropolis & -3 & 8 & 128 & 1.965 & 2.022 & -0.05655 & 0.4176 & 0.4611 & 0.3973 & STANDARD \\
+metropolis & -0.75 & 8 & 128 & 1.928 & 1.962 & -0.03385 & 1.305 & 1.467 & 1.301 & NFOLD \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,4 @@
+source_file,source_schema,study,rows,contract_status,missing_physical_context,context_fields_applied
+scalability_summary.csv,prompt6.scalability_summary.v1,scalability_L,20,complete,,
+temperature_sweep_summary.csv,prompt6.temperature_sweep_summary.v1,temperature_sweep,28,complete,,
+validation_summary.csv,prompt6.validation_summary.v1,validation,4,complete,,J;L;T

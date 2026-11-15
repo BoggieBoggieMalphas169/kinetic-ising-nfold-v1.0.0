@@ -1,0 +1,16 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+scalability_records,20
+size_series,4
+unique_L_values,8;16;32;64;128
+robust_series,4
+inconclusive_series,0
+discrepant_series,0
+pass_records,20
+inconclusive_records,0
+fail_records,0
+ci_inside_equivalence_band_records,20
+ci_contains_one_records,19
+max_abs_ratio_deviation_pct,1.2372237267406438
+max_abs_ratio_drift_per_doubling_pp,0.24531114321088682
+max_abs_delta_log_tau_slope,0.002438013145707467

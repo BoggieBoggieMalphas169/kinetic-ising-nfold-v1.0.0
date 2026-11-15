@@ -1,0 +1,12 @@
+build/
+build-*/
+__pycache__/
+*.py[cod]
+*.exe
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.dylib
+.DS_Store

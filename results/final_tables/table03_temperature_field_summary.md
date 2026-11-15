@@ -1,0 +1,8 @@
+# Robustness of physical equivalence across temperature and magnetic field.
+
+| Dynamics | H/J | T/J min | T/J max | PASS | INCONCLUSIVE | FAIL | Inconclusive T/J | Lowest PASS T/J | Max |R_tau-1| (%) | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| glauber | -3.0 | 0.8 | 2.1 | 7 | 0 | 0 |  | 0.8 | 0.2010074607488365 | ROBUST_ACROSS_TESTED_T |
+| glauber | -0.75 | 0.8 | 2.1 | 5 | 2 | 0 | 0.8;0.9 | 1.0 | 13.659154429815402 | INCONCLUSIVE_AT_SOME_T |
+| metropolis | -3.0 | 0.8 | 2.1 | 7 | 0 | 0 |  | 0.8 | 0.2553659195965174 | ROBUST_ACROSS_TESTED_T |
+| metropolis | -0.75 | 0.8 | 2.1 | 6 | 1 | 0 | 0.8 | 0.9 | 16.11117037208727 | INCONCLUSIVE_AT_SOME_T |

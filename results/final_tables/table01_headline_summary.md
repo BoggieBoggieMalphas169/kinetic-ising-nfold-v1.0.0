@@ -1,0 +1,15 @@
+# Headline results of the Standard Monte Carlo versus n-fold comparison.
+
+| Metric | Value |
+| --- | --- |
+| Analysis snapshot | snap_0cc46433731097c4 |
+| Campaign comparison records | 52 |
+| Unique physical points | 44 |
+| Physical-equivalence PASS | 49 |
+| Physical-equivalence INCONCLUSIVE | 3 |
+| Physical-equivalence FAIL | 0 |
+| Repeated points reproducible | 4/4 |
+| Robust size series | 4/4 |
+| Maximum measured speed-up | 175.77317065471306 |
+| Maximum event compression | 1066.7252190570532 |
+| Overall physical conclusion | SUPPORTED_WITH_PRECISION_LIMITS |

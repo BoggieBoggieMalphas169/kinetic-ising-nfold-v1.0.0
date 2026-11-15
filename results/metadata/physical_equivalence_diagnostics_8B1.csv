@@ -1,0 +1,10 @@
+diagnostic,value
+comparison_records,52.0
+unique_physical_points,44.0
+pass_count,49.0
+inconclusive_count,3.0
+fail_count,0.0
+ks_available_count,32.0
+ks_holm_rejection_count,0.0
+median_abs_relative_difference_pct,0.1739879610536066
+max_abs_relative_difference_pct,16.11117037208727

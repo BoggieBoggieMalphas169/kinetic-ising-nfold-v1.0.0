@@ -1,0 +1,14 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+records_total,52
+glauber_records,26
+metropolis_records,26
+matched_physical_campaign_pairs,26
+both_pass_pairs,24
+pairs_with_inconclusive,2
+pairs_with_fail,0
+glauber_tau_gt_metropolis_standard_count,26
+glauber_tau_gt_metropolis_nfold_count,26
+median_dynamic_contrast_preservation_abs_pct,0.33316898717620225
+max_dynamic_contrast_preservation_abs_pct,3.544629563147339
+dynamic_contrast_preservation_within_5pct_count,26

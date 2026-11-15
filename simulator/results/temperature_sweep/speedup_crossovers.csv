@@ -1,0 +1,5 @@
+dynamics,H,speedup_crossover_T_linear_interpolation,crossover_bracketed_in_sweep,T_min,T_max
+glauber,-3.0,,0,0.8,2.1
+glauber,-0.75,2.0183678614118685,1,0.8,2.1
+metropolis,-3.0,,0,0.8,2.1
+metropolis,-0.75,1.676685786054271,1,0.8,2.1

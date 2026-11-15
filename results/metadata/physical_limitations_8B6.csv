@@ -1,0 +1,4 @@
+synthesis_schema_version,analysis_snapshot,limitation_type,study,dynamics,L,T,H,lifetime_ratio_nfold_standard,ratio_ci95_lo,ratio_ci95_hi,message
+8B6.1,snap_0cc46433731097c4,STATISTICAL_PRECISION,temperature_sweep,glauber,32,0.8,-0.75,0.863408455701846,0.7026643246178987,1.0534038503405976,Equivalence remains unresolved at the predefined ±5% margin with the available precision; this is not classified as a discrepancy.
+8B6.1,snap_0cc46433731097c4,STATISTICAL_PRECISION,temperature_sweep,glauber,32,0.9,-0.75,1.0247123144537034,0.985231571736512,1.0654087598492716,Equivalence remains unresolved at the predefined ±5% margin with the available precision; this is not classified as a discrepancy.
+8B6.1,snap_0cc46433731097c4,STATISTICAL_PRECISION,temperature_sweep,metropolis,32,0.8,-0.75,0.8388882962791273,0.6854305901841373,1.025991675552571,Equivalence remains unresolved at the predefined ±5% margin with the available precision; this is not classified as a discrepancy.

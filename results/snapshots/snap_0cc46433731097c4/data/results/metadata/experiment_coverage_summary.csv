@@ -1,0 +1,4 @@
+study,expected_points,observed_expected_points,missing_points,duplicate_expected_points,unexpected_points,coverage_fraction
+scalability_L,20,20,0,0,0,1.0
+temperature_sweep,28,28,0,0,0,1.0
+validation,4,4,0,0,0,1.0

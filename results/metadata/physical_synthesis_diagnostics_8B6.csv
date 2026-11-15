@@ -1,0 +1,12 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+overall_physical_conclusion,SUPPORTED_WITH_PRECISION_LIMITS
+comparison_records,52
+pass_count,49
+inconclusive_count,3
+fail_count,0
+all_repeated_points_reproducible,True
+all_size_series_robust,True
+dynamic_contrast_within_5pct_count,26
+matched_glauber_metropolis_points,26
+performance_used_as_equivalence_evidence,False

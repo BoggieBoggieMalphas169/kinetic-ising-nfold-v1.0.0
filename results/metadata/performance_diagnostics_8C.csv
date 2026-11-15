@@ -1,0 +1,8 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+performance_records,52
+temperature_records,28
+size_records,20
+performance_used_as_physical_equivalence_evidence,False
+temperature_campaign_is_primary_for_T_H_conclusions,True
+scalability_campaign_is_primary_for_L_conclusions,True

@@ -1,0 +1,14 @@
+diagnostic,value
+analysis_snapshot,snap_0cc46433731097c4
+temperature_records,28
+temperature_series,4
+pass_records,25
+inconclusive_records,3
+fail_records,0
+robust_temperature_series,2
+inconclusive_temperature_series,2
+discrepant_temperature_series,0
+inconclusive_T_values,0.8;0.9
+inconclusive_H_values,-0.75
+max_ratio_ci95_width,0.35073952572269884
+max_abs_ratio_deviation_pct,16.11117037208727

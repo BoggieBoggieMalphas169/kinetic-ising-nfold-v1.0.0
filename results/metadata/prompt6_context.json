@@ -1,0 +1,10 @@
+{
+  "schema_version": "8A19-context-v1",
+  "files": {
+    "validation_summary.csv": {
+      "L": 32,
+      "T": 1.5,
+      "J": 1.0
+    }
+  }
+}
